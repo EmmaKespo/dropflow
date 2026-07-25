@@ -1,26 +1,55 @@
+/* app/globals.css */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Tailwind v4 Configuration Overrides */
+@theme {
+  /* Mobile-first breakpoint additions */
+  --breakpoint-xs: 475px;
+
+  /* Strict Monochrome Palette Base Definitions */
+  --color-brand-bg: #ffffff;
+  --color-brand-text: #000000;
+  --color-brand-border: #000000;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Custom Abstracted Layout & Typography Utilities */
+@utility section_container {
+  /* Sets standard centered layout canvas constraints with safe paddings */
+  @apply max-w-7xl mx-auto px-6 py-12 md:py-20;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility interactive_input {
+  /* Standardizes input frame borders, typography sizes, and default backgrounds */
+  @apply w-full border border-black p-3 text-sm font-medium bg-white rounded-none transition-all placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-black;
+}
+
+@utility primary_action_btn {
+  /* Reusable stark solid-black command button styling archetype */
+  @apply inline-flex items-center justify-center bg-black text-white px-6 py-3 text-sm font-bold uppercase tracking-widest border border-black transition-all hover:bg-neutral-900 disabled:opacity-50 cursor-pointer;
+}
+
+@utility secondary_outline_btn {
+  /* Transparent border-only element option block */
+  @apply inline-flex items-center justify-center bg-white text-black px-6 py-3 text-sm font-bold uppercase tracking-widest border border-black transition-all hover:bg-neutral-50 cursor-pointer;
+}
+
+@utility badge_indicator {
+  /* High contrast status indicators */
+  @apply inline-block bg-black text-white text-xs font-bold uppercase tracking-wider px-2 py-1;
+}
+
+@utility section_title {
+  /* Universal structural bold heading style across page wrappers */
+  @apply text-3xl md:text-4xl font-black uppercase tracking-tighter text-black mb-2;
+}
+
+/* Document Base Configurations Layer */
+@layer base {
+  body {
+    background-color: var(--color-brand-bg);
+    color: var(--color-brand-text);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
