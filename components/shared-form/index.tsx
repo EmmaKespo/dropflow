@@ -1,6 +1,6 @@
 // components/shared-form/index.tsx
 /**
- * NO TOMORROW HEADIN COMMENT: THIRD-PARTY GATEWAY API REGEX PROTECTION MATRIX
+ *THIRD-PARTY GATEWAY API REGEX PROTECTION MATRIX
  * Validates data integrity before allowing submissions to hit external API pipelines.
  */
 

@@ -67,7 +67,7 @@ app/
 │
 └── middleware.ts              <-- Root Layer (Intercepts unauthenticated /admin/* access)
 🧱 Phase 1: Shared Core Layout & Edge SecurityFolder 
-1: Root Configuration Layermiddleware.ts (The global guard redirecting unauthenticated users away from /admin/*)Folder 
+1: Root Configuration Layer middleware.ts (The global guard redirecting unauthenticated users away from /admin/*)Folder 
 2: Global Auth Group Layout Containerapp/(auth)/layout.tsx (The centered, minimal black-and-white structural card shell wrapping all login/signup pages)
 
 🚪 Phase 2: Core Business Entry PointsFolder 
