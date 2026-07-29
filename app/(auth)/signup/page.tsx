@@ -47,6 +47,12 @@ export default function SignupPage() {
           twilio_enabled: false // Explicit default security lock
         }]);
 
+            //  COOKIE SESSION INJECTION FOR MIDDLEWARE PASSAGE
+    // Pull the active background auth session token generated during registration
+    if (authData?.session) {
+      document.cookie = `sb-access-token=${authData.session.access_token}; path=/; max-age=${authData.session.expires_in}`;
+    }
+
       if (profileError) throw profileError;
     }
 
