@@ -1,6 +1,6 @@
 // app/(admin)/components/CreateDeliveryModal.tsx
 /**
- * NO TOMORROW HEADIN COMMENT: TYPE-SAFE MANIFEST CREATION MODAL CONTAINER
+ * TYPE-SAFE MANIFEST CREATION MODAL CONTAINER
  * Adapts the modular shared form component cleanly to the corporate dashboard context.
  */
 

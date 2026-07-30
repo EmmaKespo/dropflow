@@ -120,17 +120,17 @@ export default function DeliveryDetailModal({
 
           <button 
             onClick={handleCopySecureLink}
-            className="w-full text-center border border-black bg-white text-black py-2 text-xs font-extrabold uppercase tracking-widest hover:bg-neutral-50 transition"
+            className="w-full text-center border border-black bg-white text-black py-2 text-xs font-extrabold uppercase tracking-widest hover:bg-neutral-50 transition flex items-center justify-center gap-2"
           >
-            📋 Copy Secure Tracking Link
+            <i className="fa-regular fa-clipboard small-icon"></i> Copy Secure Tracking Link
           </button>
 
           <button 
             disabled={isProcessing}
             onClick={handlePurgeManifest}
-            className="w-full text-center border border-red-600 bg-red-50 text-red-700 py-2 text-xs font-extrabold uppercase tracking-widest hover:bg-red-100 transition"
+            className="w-full text-center border border-red-600 bg-red-50 text-red-700 py-2 text-xs font-extrabold uppercase tracking-widest hover:bg-red-100 transition flex items-center justify-center gap-2"
           >
-            🚨 Delete Delivery Manifest
+            <i className="fa-solid fa-triangle-exclamation small-icon"></i> Delete Delivery Manifest
           </button>
         </div>
       </div>

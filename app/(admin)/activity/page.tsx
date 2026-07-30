@@ -171,8 +171,8 @@ setLogs(mappedLogs);
           Querying live activity ledger...
         </div>
       ) : logs.length === 0 ? (
-        <div className="border border-dashed border-neutral-300 bg-white p-12 text-center text-xs font-medium text-neutral-400 uppercase tracking-wider">
-          📭 No operational events recorded across your fleet yet.
+        <div className="border border-dashed border-neutral-300 bg-white p-12 text-center text-xs font-medium text-neutral-400 uppercase tracking-wider flex items-center justify-center gap-2">
+          <i className="fa-solid fa-inbox small-icon"></i> No operational events recorded across your fleet yet.
         </div>
       ) : (
         <div className="relative border-l-2 border-black pl-6 ml-2 space-y-6 py-2">
@@ -195,8 +195,8 @@ setLogs(mappedLogs);
                   </p>
                 </div>
                 <div className="text-right shrink-0">
-                  <span className="font-mono text-[10px] font-black bg-neutral-100 text-neutral-500 border border-neutral-200 px-1.5 py-0.5">
-                    ⏱️ {item.createdAt}
+                  <span className="font-mono text-[10px] font-black bg-neutral-100 text-neutral-500 border border-neutral-200 px-1.5 py-0.5 inline-flex items-center gap-1">
+                    <i className="fa-regular fa-clock small-icon"></i> {item.createdAt}
                   </span>
                 </div>
               </div>
