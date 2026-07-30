@@ -1,79 +1,154 @@
-//main/marketing page
-app/
-├── layout.tsx               
-├── globals.css              
-└── (marketing)/
-    ├── HeroAndForm.tsx
-    ├── MarketingDetails.tsx
-    └── page.tsx  
-    |__ layout.tsx             
+[29-Jul-26 4:48 PM] Emma.....: # DropFlow 🚚
 
-// riders 
-app/(riders)/track/[token]/
-├── components/
-│   ├── DeliveryInfoCard.tsx
-│   ├── DeliveryNotesCard.tsx
-│   ├── ProgressTrackBar.tsx
-│   └── ContactCustomerPanel.tsx
-├── layout.tsx
-└── page.tsx
+> A lightweight logistics delivery platform that helps businesses track riders in real time and keep customers updated throughout the delivery process.
 
-//admin dashboard
-app/
-└── (admin)/
-    ├── components/
-    │   ├── AdminSidebar.tsx         <-- Navigation & layout menu panel
-    │   ├── FleetSummaryGrid.tsx     <-- Live statistic counter blocks
-    │   ├── RealTimeAlertsPanel.tsx  <-- Real-time notification banners
-    │   ├── DeliveriesTable.tsx      <-- Tabular data view grid for desktop/mobile
-    │   ├── CreateDeliveryModal.tsx  <-- New manifest intake form wrapper
-    │   └── DeliveryDetailModal.tsx  <-- Single row analytical drilldown window
-    ├── layout.tsx                   <-- Secure workspace structural shell container
-    └── dashboard/
-        └── page.tsx                 <-- Ultra-clean state orchestration controller
+<!-- Add your screenshot/GIF here -->
+![Project Demo](path/to/screenshot.png)
 
-// reusable form / component  
-components/
-└── shared-form/
-    ├── InputFields.tsx     <-- Handles purely the 4 input fields & styling
-    ├── SuccessScreen.tsx   <-- Handles clipboard copy & WhatsApp deep links
-    └── index.tsx           <-- Core state orchestrator & validation runner
+## 🌟 Features
 
+- Delivery Management: Create and manage deliveries from a centralized business dashboard.
+- Real-Time Tracking: Monitor delivery status updates in real time with Supabase Realtime.
+- Simple Rider Tracking: Riders use a mobile-friendly tracking link without creating an account.
+- One-Tap Status Updates: Riders can update deliveries with Picked Up, Arrived, and Delivered actions.
+- Secure Tracking Links: Every delivery receives a unique tracking token.
+- Customer Notifications: Automatically notify customers through WhatsApp when a rider arrives.
+- Activity Logs: Keep a history of important delivery events and status changes.
+- Authentication: Secure business authentication powered by Supabase Auth.
+- Row-Level Security: Supabase RLS ensures businesses can only access their own delivery data.
+- Free & Premium Workflow: Manual tracking-link sharing for free users and automated WhatsApp workflows for premium users.
 
-// authentication  
-app/
-├── (auth)/                    <-- Consolidated Authentication Route Group
-│   ├── layout.tsx             <-- Centered, focused auth styling wrapper shell
-│   │
-│   ├── login/
-│   │   ├── page.tsx           <-- Login Orchestrator Screen Container
-│   │   └── components/
-│   │       └── LoginForm.tsx  <-- Handles strict email/password intakes & actions
-│   │
-│   ├── signup/
-│   │   ├── page.tsx           <-- Signup Orchestrator Screen Container
-│   │   └── components/
-│   │       └── SignupForm.tsx <-- Handles profile metadata intake (Business Name, etc.)
-│   │
-│   ├── forgot-password/
-│   │   ├── page.tsx           <-- Recovery Initiation Page Layout
-│   │   └── components/
-│   │       └── RecoveryForm.tsx <-- Pure email extraction submission terminal
-│   │
-│   └── reset-password/
-│       ├── page.tsx           <-- Password Override Page Layout
-│       └── components/
-│           └── ResetForm.tsx  <-- Double-entry validation password reset fields
-│
-└── middleware.ts              <-- Root Layer (Intercepts unauthenticated /admin/* access)
-🧱 Phase 1: Shared Core Layout & Edge SecurityFolder 
-1: Root Configuration Layer middleware.ts (The global guard redirecting unauthenticated users away from /admin/*)Folder 
-2: Global Auth Group Layout Containerapp/(auth)/layout.tsx (The centered, minimal black-and-white structural card shell wrapping all login/signup pages)
+## 🛠 Built With
 
-🚪 Phase 2: Core Business Entry PointsFolder 
-3: The Business Login Terminalapp/(auth)/login/components/LoginForm.tsx (Pure input execution panel)app/(auth)/login/page.tsx (Master Orchestrator)Folder
- 4: The Fleet Registration Terminalapp/(auth)/signup/components/SignupForm.tsx (Captures email, business name, and profiles variables)app/(auth)/signup/page.tsx (Master Orchestrator)
- 
- 🔒 Phase 3: Password Safety OperationsFolder 
- 5: Forgot Password Recovery Hubapp/(auth)/forgot-password/components/RecoveryForm.tsx (Intakes recovery emails securely)app/(auth)/forgot-password/page.tsx (Master Orchestrator)Folder 
- 6: Reset Password Enforcement Hubapp/(auth)/reset-password/components/ResetForm.tsx (Double-entry password verification inputs)app/(auth)/reset-password/page.tsx (Master Orchestrator)
+- [Next.js](https://nextjs.org) - Full-stack React framework
+- [TypeScript](https://www.typescriptlang.org) - Type safety
+- [Tailwind CSS](https://tailwindcss.com) - Styling and responsive UI
+- [Supabase](https://supabase.com) - PostgreSQL, authentication, RLS, and Realtime
+- [Twilio](https://www.twilio.com) - WhatsApp messaging and notifications
+- [Vercel](https://vercel.com) - Deployment and hosting
+
+## 🏗 Architecture
+
+DropFlow is separated into three main application areas:
+
+`text
+                    DropFlow
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+    Marketing        Admin          Rider
+        │              │              │
+     Public       Dashboard       Tracking Link
+                       │              │
+                       │              │
+                   Supabase       Server Actions
+                       │              │
+                       └──────┬───────┘
+                              │
+                         PostgreSQL
+                              │
+                    ┌─────────┼─────────┐
+                    │         │         │
+                 Profiles  Deliveries  Logs
+                                        │
+                                  Notifications
+[29-Jul-26 4:49 PM] Emma.....: ## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js (v18 or higher)
+- npm or yarn
+- A Supabase project
+- A Twilio account if you want to test WhatsApp notifications
+
+### Installation
+
+1. Clone the repository:
+
+   `bash
+   git clone https://github.com/your-username/dropflow.git
+[29-Jul-26 4:51 PM] Emma.....: 2. Navigate into the directory:
+
+   `bash
+   cd dropflow
+[29-Jul-26 4:51 PM] Emma.....: Install dependencies
+
+npm install
+[29-Jul-26 4:51 PM] Emma.....: Create a .env.local file in the root directory
+
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+
+TWILIO_ACCOUNT_SID=your_twilio_account_sid
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_WHATSAPP_FROM=your_twilio_whatsapp_number
+
+Never expose your Twilio Auth Token or Supabase service-role key in client-side code.
+[29-Jul-26 4:53 PM] Emma.....: To launch the local development server
+
+npm run dev
+
+Open your browser and visit:
+http://localhost:3000
+[29-Jul-26 4:53 PM] Emma.....: Basic Workflow
+
+Create Delivery
+      ↓
+Generate Tracking Link
+      ↓
+Send Link to Rider
+      ↓
+Rider Opens Tracking Page
+      ↓
+Picked Up
+      ↓
+Arrived
+      ↓
+Customer Notification
+      ↓
+Delivered
+      ↓
+Admin Dashboard Updates
+[29-Jul-26 4:53 PM] Emma.....: Security
+DropFlow uses Supabase Row-Level Security (RLS) to protect business data.
+Businesses can:
+View and update their own profiles
+View their own deliveries
+Create their own deliveries
+Update their own deliveries
+View activity logs belonging to their deliveries
+View notifications belonging to their deliveries
+Rider actions are handled through secure server-side logic instead of giving anonymous users unrestricted database access.
+[29-Jul-26 4:54 PM] Emma.....: Database
+DropFlow currently uses four main tables:
+
+profiles
+    │
+    └── deliveries
+            │
+            ├── activity_logs
+            │
+            └── notifications
+
+Main Tables
+profiles — Business and account information
+deliveries — Customer, rider, status, and tracking information
+activity_logs — Delivery status history
+notifications — WhatsApp and notification records
+[29-Jul-26 4:54 PM] Emma.....: 🤝 Contributing
+Contributions are what make the open-source community an amazing place to learn, inspire, and create.
+Fork the Project
+Create your Feature Branch:
+git checkout -b feature/AmazingFeature
+Commit your Changes:
+git commit -m "Add some AmazingFeature"
+Push to the Branch:
+git push origin feature/AmazingFeature
+Open a Pull Request
+[29-Jul-26 4:54 PM] Emma.....: 📄 License
+Distributed under the MIT License. See LICENSE for more information.
+✉️ Contact
+Emma Kespo - kespoemma@gmail.com
+Project Link: https://github.com/your-username/dropflow⁠�
