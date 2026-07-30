@@ -18,13 +18,6 @@
   Step 11: Server-Side Notifications Auditing Layer
   Step 12: Twilio WhatsApp Gateway Sandbox Integration
 
-<h3>
-  <img src="rocket.png" alt="Rocket" class="small-icon"> Launching Soon
-</h3>
-
-<p>
-  <img src="party.png" alt="Party" class="big-icon"> Celebration Time
-</p>
 
 //twilo recovery code
 EZ9FNGAJU3VY589PNYKPBTWT

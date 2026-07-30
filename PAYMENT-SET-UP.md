@@ -132,3 +132,176 @@ export default function AccountSettingsPage() {
     </>
   );
 }
+
+## subscription setup  
+// app/(auth)/subscribe/page.tsx
+/**
+ * NO TOMORROW HEADIN COMMENT: EXPLICIT ONBOARDING BILLING GATEWAY FIREWALL
+ * Blocks un-upgraded users upon signup registration loops, forcing immediate 
+ * Paystack collections before routing credentials into the admin matrix.
+ */
+
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
+import { usePaystackPayment } from "react-paystack";
+
+export default function SubscriptionGatePage() {
+  const router = useRouter();
+  const [operatorEmail, setOperatorEmail] = useState("");
+  const [profileId, setProfileId] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function verifyGateCredentials() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          router.push("/login");
+          return;
+        }
+
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("id, email, subscription_plan")
+          .eq("id", user.id)
+          .single();
+
+        if (profile?.subscription_plan === "premium") {
+          router.push("/dashboard"); // Bypass if already upgraded
+          return;
+        }
+
+        if (profile) {
+          setOperatorEmail(profile.email);
+          setProfileId(profile.id);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    verifyGateCredentials();
+  }, [router]);
+
+  const paystackConfig = {
+    reference: `sub-${new Date().getTime()}`,
+    email: operatorEmail || "billing@dropflow.com",
+    amount: 1500000, // ₦15,000 in kobo
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "",
+  };
+
+  const handlePaymentSuccess = async () => {
+    setLoading(true);
+    try {
+      // Mutate the subscription rows fields directly inside public.profiles database table [26-Jul-26 11:37 AM]
+      const { error } = await supabase
+        .from("profiles")
+        .update({ subscription_plan: "premium", twilio_enabled: true })
+        .eq("id", profileId);
+
+      if (error) throw error;
+      
+      alert("Payment Verified! Welcome to DropFlow Premium.");
+      router.push("/dashboard"); // Unlock passage to cockpit panels
+    } catch (err: any) {
+      alert(`Upgrade Error: ${err.message}`);
+      setLoading(false);
+    }
+  };
+
+  const initializePayment = usePaystackPayment(paystackConfig);
+
+  if (loading) return <div className="min-h-screen bg-white text-black flex items-center justify-center font-mono text-xs uppercase animate-pulse">Verifying Billing Status...</div>;
+
+  return (
+    <div className="min-h-screen bg-neutral-50 text-black flex items-center justify-center p-4">
+      <div className="bg-white border-2 border-black p-8 max-w-sm w-full space-y-5 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] text-left">
+        <span className="bg-black text-white px-2 py-0.5 text-[9px] font-black uppercase tracking-widest inline-block">Activation Required</span>
+        <h2 className="text-xl font-black uppercase tracking-tight">Activate Fleet Workspace</h2>
+        <p className="text-xs font-medium text-neutral-600 leading-relaxed">
+          Your account has been created successfully! To access the premium operational monitors, analytics dashboards, and real-time trackers, subscribe to the premium tier.
+        </p>
+        <div className="border-t border-b border-black py-3 font-mono text-xs font-bold uppercase flex justify-between bg-neutral-50 px-2">
+          <span>Premium Plan Subscription:</span>
+          <span>₦15,000/mo</span>
+        </div>
+        <button 
+          onClick={() => initializePayment({ onSuccess: handlePaymentSuccess, onClose: () => alert("Checkout suspended.") })}
+          className="w-full bg-black text-white border border-black py-4 text-xs font-extrabold uppercase tracking-widest hover:bg-neutral-900 transition shadow-[3px_3px_0px_0px_rgba(115,115,115,1)] cursor-pointer"
+        >
+          💳 Complete Setup & Pay
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// Inside app/(auth)/signup/page.tsx (Around Line 52)
+// CHANGE THE FINISHING ROUTER FORWARDING HOOK LINE FROM THIS:
+router.push("/dashboard");
+
+// TO THIS SECURE DISPATCH REDIRECT FILTER:
+router.push("/subscribe"); // Forces newly registered users through the billing checkout block first!
+  
+  // app/(admin)/layout.tsx
+/**
+ * NO TOMORROW HEADIN COMMENT: SECURE VERIFICATION CORE APP LAYOUT
+ * Validates active profile subscription plan parameters rows before rendering admin dashboards,
+ * completely blocking free accounts from viewing private data tables.
+ */
+
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
+import AdminSidebar from "./components/AdminSidebar";
+
+export default function AdminWorkspaceGroupContainerLayout({ children }: { children: React.ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [verifying, setVerifying] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    async function enforceSubscriptionPlanBarrier() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          router.push("/login");
+          return;
+        }
+
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("subscription_plan")
+          .eq("id", user.id)
+          .single();
+
+        // STRICT GATE CHECK: If the database row reads 'free', bounce them to payment instantly! [26-Jul-26 11:37 AM]
+        if (!profile || profile.subscription_plan === "free") {
+          router.push("/subscribe");
+          return;
+        }
+
+        setVerifying(false); // Unlock screen rendering only if premium check passes
+      } catch (err) {
+        router.push("/login");
+      }
+    }
+    enforceSubscriptionPlanBarrier();
+  }, [router]);
+
+  if (verifying) return <div className="min-h-screen bg-neutral-50 text-black flex items-center justify-center font-mono text-xs uppercase animate-pulse">Authorizing Security Clearance...</div>;
+
+  return (
+    <div className="min-h-screen bg-neutral-50 text-black flex relative w-full overflow-x-hidden antialiased">
+      <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div className="flex-1 min-w-0 w-full md:pl-64 flex flex-col">{children}</div>
+    </div>
+  );
+}
+

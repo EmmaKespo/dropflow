@@ -10,14 +10,14 @@ import "./globals.css"; // Imports global Tailwind styles from your root app fol
 
 export const metadata: Metadata = {
   
-  metadataBase: new URL("https://your-domain.vercel.app"), 
+  metadataBase: new URL("https://dropflow-six.vercel.app"), 
 
   title: "DropFlow | Real-Time Fleet Logistics & Delivery Tracking Engine",
   description: "Deploy premium corporate fleet dashboards or track guest delivery manifests live with secure token pipelines and zero overhead.",
   openGraph: {
     title: "DropFlow Logistics Network Control Node",
     description: "Real-time, mobile-first logistics tracking console powering free dispatches and premium enterprise fleets.",
-    url: "https://your-domain.vercel.app", 
+    url: "https://dropflow-six.vercel.app", 
     siteName: "DropFlow Inc.",
     images: [
       {
